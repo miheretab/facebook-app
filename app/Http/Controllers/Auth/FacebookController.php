@@ -17,9 +17,7 @@ class FacebookController extends Controller
 
 
     public function redirectToFacebook() {
-        Auth::loginUsingId(1);
-        return redirect()->route('home');
-        //return Socialite::driver('facebook')->redirect();
+        return Socialite::driver('facebook')->redirect();
     }
 
     public function handleFacebookCallback() {
