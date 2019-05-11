@@ -43,23 +43,14 @@ class FacebookController extends Controller
     }
 
     public function handleFacebookDeauthCallback(Request $request) {
-        $create['name'] = 'Miheretab Alemu';
-        $create['email'] = 'mihrtab@gmail.com5';
-        $create['facebook_id'] = '23191672416328185';
-        $create['access_token'] = json_encode($request->all());
+        $signed_request = $request->input('signed_request');
+        list($encodedSig, $payload) = explode('.', $signed_request, 2);
+
+        $sig = base64_decode($encodedSig);
+        $data = json_decode(base64_decode($payload), true);
+        $facebookId = $data['user_id'];
+
         $userModel = new User;
-        $createdUser = $userModel->addNew($create);
-        /*
-        try {
-            $user = Socialite::driver('facebook')->user();
-            $facebookId = $user->getId();
-            $userModel = new User;
-            $createdUser = $userModel->deActive($facebookId);
-
-        } catch (Exception $e) {
-
-            return redirect('auth/facebook');
-
-        }*/
+        $createdUser = $userModel->deActive($facebookId);
     }
 }
