@@ -24,9 +24,15 @@ class FacebookController extends Controller
         try {
             $user = Socialite::driver('facebook')->user();
             $create['name'] = $user->getName();
+            $create['email'] = $user->getEmail();
             $create['facebook_id'] = $user->getId();
+            $create['access_token'] = $user->getToken();
 
-            var_dump($user);var_dump($create);exit;
+            $userModel = new User;
+            $createdUser = $userModel->addNew($create);
+            Auth::loginUsingId($createdUser->id);
+
+            return redirect()->route('home');
 
 
         } catch (Exception $e) {
@@ -36,7 +42,17 @@ class FacebookController extends Controller
         }
     }
 
-    public function handleFacebookDeauthCallback(Request $request) {
-        var_dump($request);
+    public function handleFacebookDeauthCallback() {
+        try {
+            $user = Socialite::driver('facebook')->user();
+            $facebookId = $user->getId();
+            $userModel = new User;
+            $createdUser = $userModel->deActive($facebookId);
+
+        } catch (Exception $e) {
+
+            return redirect('auth/facebook');
+
+        }
     }
 }

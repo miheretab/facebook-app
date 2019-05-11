@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/home', function () {
+    return view('home');
+})->middleware('auth')->name('home');
 Route::get('auth/facebook', 'Auth\FacebookController@redirectToFacebook');
 Route::get('auth/facebook/callback', 'Auth\FacebookController@handleFacebookCallback');
 Route::get('auth/facebook/deauth_callback', 'Auth\FacebookController@handleFacebookDeauthCallback');

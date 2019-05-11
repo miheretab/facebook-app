@@ -16,24 +16,28 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'facebook_id', 'access_token',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    public function addNew($input)
+    {
+        $check = static::where('facebook_id',$input['facebook_id'])->first();
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+
+        if(is_null($check)){
+            return static::create($input);
+        } else {
+            $check->is_active = true;
+            $check->save();
+        }
+
+
+        return $check;
+    }
+
+    public function deActive($facebookId) {
+        $userInstance = static::where('facebook_id',$facebookId)->first();
+        $userInstance->is_active = false;
+        $userInstance->save();
+    }
 }
