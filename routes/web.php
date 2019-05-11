@@ -12,11 +12,21 @@
 */
 
 Route::get('/', function () {
+    if(Auth::check()) {
+        return redirect()->route('home');
+    }
     return view('welcome');
 })->name('login');
+
+Route::get('/logout', function () {
+	Auth::logout();
+	return redirect()->route('login');
+})->name('logout');
+
 Route::get('/home', function () {
     return view('home');
 })->middleware('auth')->name('home');
+
 Route::get('auth/facebook', 'Auth\FacebookController@redirectToFacebook');
 Route::get('auth/facebook/callback', 'Auth\FacebookController@handleFacebookCallback');
 Route::get('auth/facebook/deauth_callback', 'Auth\FacebookController@handleFacebookDeauthCallback');

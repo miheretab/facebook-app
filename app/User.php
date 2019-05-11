@@ -40,4 +40,9 @@ class User extends Authenticatable
         $userInstance->is_active = false;
         $userInstance->save();
     }
+
+    public function getPictureUrlAttribute($value) {
+        return 'https://graph.facebook.com/v3.0/'.$this->facebook_id.'/picture?type=normal';
+    }
+
 }
