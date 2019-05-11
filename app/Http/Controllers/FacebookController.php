@@ -9,30 +9,18 @@ use App\Http\Controllers\Controller;
 use Socialite;
 use Exception;
 use Auth;
+use Illuminate\Http\Request;
 
 
 class FacebookController extends Controller
 {
 
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function redirectToFacebook()
-    {
+    public function redirectToFacebook() {
         return Socialite::driver('facebook')->redirect();
     }
 
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function handleFacebookCallback()
-    {
+    public function handleFacebookCallback() {
         try {
             $user = Socialite::driver('facebook')->user();
             $create['name'] = $user->getName();
@@ -43,10 +31,12 @@ class FacebookController extends Controller
 
         } catch (Exception $e) {
 
-
             return redirect('auth/facebook');
 
-
         }
+    }
+
+    public function handleFacebookDeauthCallback(Request $request) {
+        var_dump($request);
     }
 }

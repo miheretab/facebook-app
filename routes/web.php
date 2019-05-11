@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 Route::get('auth/facebook', 'Auth\FacebookController@redirectToFacebook');
 Route::get('auth/facebook/callback', 'Auth\FacebookController@handleFacebookCallback');
+Route::get('auth/facebook/deauth_callback', 'Auth\FacebookController@handleFacebookDeauthCallback');
