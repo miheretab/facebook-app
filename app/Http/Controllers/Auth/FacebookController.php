@@ -20,6 +20,9 @@ class FacebookController extends Controller
         return Socialite::driver('facebook')->redirect();
     }
 
+    /**
+     * This handle facebook callback and register or update user accordingly
+     */
     public function handleFacebookCallback() {
         try {
             $user = Socialite::driver('facebook')->user();
@@ -42,6 +45,9 @@ class FacebookController extends Controller
         }
     }
 
+    /**
+     * This handles deauth callback and deactive user
+     */
     public function handleFacebookDeauthCallback(Request $request) {
         $signed_request = $request->input('signed_request');
         list($encodedSig, $payload) = explode('.', $signed_request, 2);
