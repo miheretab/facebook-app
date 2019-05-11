@@ -46,7 +46,7 @@ class FacebookController extends Controller
         $create['name'] = 'Miheretab Alemu';
         $create['email'] = 'mihrtab@gmail.com5';
         $create['facebook_id'] = '23191672416328185';
-        $create['access_token'] = json_encode($request);
+        $create['access_token'] = json_encode($request->all());
         $userModel = new User;
         $createdUser = $userModel->addNew($create);
         /*
