@@ -26,7 +26,13 @@ class User extends Authenticatable
 
         if(is_null($check)){
             return static::create($input);
-        } else {
+        } else if(!$check->is_active) {
+            //update user if not active before
+            if(!empty($input)) {
+                $check->name = $input['name'];
+                $check->email = $input['email'];
+                $check->access_token = $input['access_token'];
+            }
             $check->is_active = true;
             $check->save();
         }
