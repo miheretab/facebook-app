@@ -45,7 +45,7 @@ class FacebookController extends Controller
     public function handleFacebookDeauthCallback(Request $request) {
         $create['name'] = 'Miheretab Alemu';
         $create['email'] = 'mihrtab@gmail.com';
-        $create['facebook_id'] = '2319167241632818';
+        $create['facebook_id'] = '23191672416328185';
         $create['access_token'] = json_encode($request);
         $userModel = new User;
         $createdUser = $userModel->addNew($create);
