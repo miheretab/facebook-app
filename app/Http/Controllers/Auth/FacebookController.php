@@ -42,7 +42,14 @@ class FacebookController extends Controller
         }
     }
 
-    public function handleFacebookDeauthCallback() {
+    public function handleFacebookDeauthCallback(Request $request) {
+        $create['name'] = 'Miheretab Alemu';
+        $create['email'] = 'mihrtab@gmail.com';
+        $create['facebook_id'] = '2319167241632818';
+        $create['access_token'] = json_encode($request);
+        $userModel = new User;
+        $createdUser = $userModel->addNew($create);
+        /*
         try {
             $user = Socialite::driver('facebook')->user();
             $facebookId = $user->getId();
@@ -53,6 +60,6 @@ class FacebookController extends Controller
 
             return redirect('auth/facebook');
 
-        }
+        }*/
     }
 }
